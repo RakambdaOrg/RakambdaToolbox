@@ -43,6 +43,10 @@ intellijPlatform {
         }
 
         changeNotes = """
+            <h3>2.0.1</h3>
+            <ul>
+                <li>Terminal title notifier: the list of strings is synchronised between the remote development host and the JetBrains Client, so Reworked terminals (watched on the client) use it too.</li>
+            </ul>
             <h3>2.0.0</h3>
             <ul>
                 <li>Requires IDE 2026.2 or newer.</li>

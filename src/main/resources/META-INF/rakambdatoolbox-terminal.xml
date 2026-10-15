@@ -7,6 +7,9 @@
                 id="fr.rakambda.rakambdatoolbox.terminal.titlenotifier"
                 instance="fr.rakambda.rakambdatoolbox.terminal.titlenotifier.TerminalTitleNotifierConfigurable"
                 key="settings.terminal.title.notifier.display.name"/>
+        <!-- Loaded on both sides in remote development, as required by this extension point -->
+        <rdct.remoteSettingProvider
+                implementation="fr.rakambda.rakambdatoolbox.terminal.titlenotifier.TerminalTitleNotifierRemoteSettingsInfoProvider"/>
         <notificationGroup
                 id="Rakambda Toolbox: terminal title"
                 displayType="BALLOON"

@@ -8,9 +8,12 @@ import com.intellij.openapi.components.service
 
 /**
  * Global (application level) list of strings that trigger a notification when they appear in a terminal title.
+ *
+ * In remote development, each side has its own copy; [TerminalTitleNotifierRemoteSettingsInfoProvider] keeps them in
+ * sync, since Classic terminals are watched on the host and Reworked ones on the JetBrains Client.
  */
 @Service(Service.Level.APP)
-@State(name = "TerminalTitleNotifier", storages = [Storage("rakambdatoolbox.xml")])
+@State(name = TerminalTitleNotifierSettings.COMPONENT_NAME, storages = [Storage("rakambdatoolbox.xml")])
 class TerminalTitleNotifierSettings : PersistentStateComponent<TerminalTitleNotifierSettings.Settings> {
     class Settings {
         var patterns: MutableList<String> = mutableListOf()
@@ -33,6 +36,8 @@ class TerminalTitleNotifierSettings : PersistentStateComponent<TerminalTitleNoti
     }
 
     companion object {
+        const val COMPONENT_NAME = "TerminalTitleNotifier"
+
         fun getInstance(): TerminalTitleNotifierSettings = service()
 
         /** Converts the text typed in the settings (one pattern per line) to the stored list. */

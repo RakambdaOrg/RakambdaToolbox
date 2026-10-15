@@ -9,7 +9,7 @@ group = providers.gradleProperty("pluginGroup").get()
 version = providers.gradleProperty("pluginVersion").get()
 
 kotlin {
-    jvmToolchain(21)
+    jvmToolchain(25)
 }
 
 repositories {
@@ -43,7 +43,12 @@ intellijPlatform {
         }
 
         changeNotes = """
-            Initial version
+            <h3>2.0.0</h3>
+            <ul>
+                <li>Requires IDE 2026.2 or newer.</li>
+                <li>Terminal title notifier: supports the Reworked terminal engine, including in remote development (JetBrains Client).</li>
+            </ul>
+            <h3>1.0.0</h3>
             <ul>
                 <li>Terminal title notifier: notifies when a terminal title contains one of the configured strings (Settings | Tools | Terminal Title Notifier).</li>
             </ul>

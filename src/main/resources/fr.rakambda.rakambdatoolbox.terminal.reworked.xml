@@ -1,0 +1,17 @@
+<!--
+    Content module of the plugin, declared in plugin.xml. Loaded only where the Reworked terminal frontend module is
+    available (the IDE itself, or the JetBrains Client in remote development), with its own classloader limited to the
+    package below.
+-->
+<idea-plugin package="fr.rakambda.rakambdatoolbox.terminal.titlenotifier.reworked">
+    <dependencies>
+        <plugin id="org.jetbrains.plugins.terminal"/>
+        <module name="intellij.terminal.frontend"/>
+    </dependencies>
+
+    <!-- Terminal title notifier -->
+    <projectListeners>
+        <listener class="fr.rakambda.rakambdatoolbox.terminal.titlenotifier.reworked.ReworkedTerminalTitleListener"
+                  topic="com.intellij.terminal.frontend.toolwindow.TerminalTabsManagerListener"/>
+    </projectListeners>
+</idea-plugin>

@@ -12,6 +12,6 @@
                 displayType="BALLOON"
                 key="notification.group.terminal.title"/>
         <postStartupActivity
-                implementation="fr.rakambda.rakambdatoolbox.terminal.titlenotifier.TerminalTitleWatcherStartupActivity"/>
+                implementation="fr.rakambda.rakambdatoolbox.terminal.titlenotifier.classic.ClassicTerminalTitleWatcherStartupActivity"/>
     </extensions>
 </idea-plugin>

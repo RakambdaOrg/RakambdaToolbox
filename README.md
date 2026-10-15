@@ -11,7 +11,8 @@ IntelliJ plugin for my personal needs.
 
   **Remote development: the plugin must be installed in the JetBrains Client**, not only on the host. Reworked
   terminals (the default engine) and system notifications only exist on the client side: without the plugin there,
-  Reworked terminals are never watched. Classic terminals are watched on the host, so install it on both sides. The
+  Reworked terminals are never watched. Classic terminals are watched on the host only (its notifications are shown in the client, but cannot be system
+  notifications), so install it on both sides. The
   list of strings is synchronised between them.
 
 ## Installation and updates

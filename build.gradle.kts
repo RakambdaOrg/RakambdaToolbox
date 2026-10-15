@@ -46,6 +46,7 @@ intellijPlatform {
             <h3>2.0.1</h3>
             <ul>
                 <li>Terminal title notifier: the list of strings is synchronised between the remote development host and the JetBrains Client, so Reworked terminals (watched on the client) use it too.</li>
+                <li>Terminal title notifier: Classic terminals are no longer notified twice in remote development (they are only watched on the host).</li>
             </ul>
             <h3>2.0.0</h3>
             <ul>

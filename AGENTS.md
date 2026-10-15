@@ -36,7 +36,9 @@ settings.gradle.kts               Project name, JDK toolchain resolver
 src/main/kotlin/                  Plugin code (package fr.rakambda.rakambdatoolbox)
 src/main/resources/META-INF/
     plugin.xml                    Plugin descriptor: extensions, actions, dependencies
+    rakambdatoolbox-terminal.xml  Extensions loaded only when the bundled Terminal plugin is present
     pluginIcon.svg                Plugin icon
+src/main/resources/messages/      RakambdaToolboxBundle.properties (user-visible strings)
 src/test/kotlin/                  Tests (IntelliJ Platform test framework, JUnit 4)
 updatePlugins.xml                 Custom plugin repository descriptor read by the IDE
 scripts/check-update-descriptor.sh  Checks updatePlugins.xml against gradle.properties
@@ -44,8 +46,6 @@ scripts/check-update-descriptor.sh  Checks updatePlugins.xml against gradle.prop
 .github/workflows/build.yml       CI: build, tests, plugin verification
 .github/workflows/release.yml     Attaches the plugin zip to a published GitHub release
 ```
-
-`src/main/kotlin` and `src/test/kotlin` do not exist yet: create them with the first feature.
 
 ## Commands
 
@@ -73,8 +73,8 @@ claiming the build passes. CI (`build.yml`) runs on every push and is the refere
 - Register everything declaratively in `plugin.xml` (actions, extensions, services, listeners). Group the entries of a
   feature together with an XML comment naming it.
 - Prefer light services (`@Service`) over `<applicationService>` / `<projectService>` declarations.
-- User-visible strings go in a message bundle (`messages/RakambdaToolboxBundle.properties` + a `DynamicBundle`
-  wrapper) once the first one is needed. Do not hardcode them.
+- User-visible strings go in `messages/RakambdaToolboxBundle.properties`, read through
+  `fr.rakambda.rakambdatoolbox.RakambdaToolboxBundle` (or `key=` attributes in the descriptors). Do not hardcode them.
 - Respect the IntelliJ threading model: no blocking work on the EDT, read actions to access PSI/VFS, write actions
   (on the EDT) to modify them. For background work, prefer coroutines launched from the `CoroutineScope`
   injected into a light service's constructor.

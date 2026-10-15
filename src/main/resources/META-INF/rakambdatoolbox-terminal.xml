@@ -1,0 +1,17 @@
+<!-- Features that need the bundled Terminal plugin. Loaded only when it is present. -->
+<idea-plugin>
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Terminal title notifier -->
+        <applicationConfigurable
+                parentId="tools"
+                id="fr.rakambda.rakambdatoolbox.terminal.titlenotifier"
+                instance="fr.rakambda.rakambdatoolbox.terminal.titlenotifier.TerminalTitleNotifierConfigurable"
+                key="settings.terminal.title.notifier.display.name"/>
+        <notificationGroup
+                id="Rakambda Toolbox: terminal title"
+                displayType="BALLOON"
+                key="notification.group.terminal.title"/>
+        <postStartupActivity
+                implementation="fr.rakambda.rakambdatoolbox.terminal.titlenotifier.TerminalTitleWatcherStartupActivity"/>
+    </extensions>
+</idea-plugin>

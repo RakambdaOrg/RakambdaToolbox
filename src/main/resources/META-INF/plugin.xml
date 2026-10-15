@@ -8,6 +8,10 @@
     ]]></description>
 
     <depends>com.intellij.modules.platform</depends>
+    <!-- Terminal title notifier -->
+    <depends optional="true" config-file="rakambdatoolbox-terminal.xml">org.jetbrains.plugins.terminal</depends>
+
+    <resource-bundle>messages.RakambdaToolboxBundle</resource-bundle>
 
     <extensions defaultExtensionNs="com.intellij">
     </extensions>

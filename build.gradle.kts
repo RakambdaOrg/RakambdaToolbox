@@ -29,8 +29,8 @@ dependencies {
         create(providers.gradleProperty("platformType"), providers.gradleProperty("platformVersion"))
         testFramework(TestFrameworkType.Platform)
 
-        // Add necessary plugin dependencies for compilation here, example:
-        // bundledPlugin("com.intellij.java")
+        // Terminal title notifier
+        bundledPlugin("org.jetbrains.plugins.terminal")
     }
 }
 
@@ -44,6 +44,9 @@ intellijPlatform {
 
         changeNotes = """
             Initial version
+            <ul>
+                <li>Terminal title notifier: notifies when a terminal title contains one of the configured strings (Settings | Tools | Terminal Title Notifier).</li>
+            </ul>
         """.trimIndent()
     }
 

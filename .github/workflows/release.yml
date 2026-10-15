@@ -1,0 +1,40 @@
+name: Release
+'on':
+  release:
+    types:
+      - published
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.release.tag_name }}
+      - name: Set up JDK
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 21
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v5
+      - name: Check tag matches plugin version
+        env:
+          TAG: ${{ github.event.release.tag_name }}
+        run: |
+          version="$(grep -E '^pluginVersion=' gradle.properties | cut -d= -f2-)"
+          if [[ "$TAG" != "v${version}" ]]; then
+            echo "Tag $TAG does not match pluginVersion ${version} (expected v${version})"
+            exit 1
+          fi
+      - name: Check update descriptor
+        run: ./scripts/check-update-descriptor.sh
+      - name: Build plugin
+        run: ./gradlew buildPlugin
+      - name: Upload plugin to release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.event.release.tag_name }}
+        run: gh release upload "$TAG" build/distributions/*.zip --clobber

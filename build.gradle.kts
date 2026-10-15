@@ -1,11 +1,16 @@
+import org.jetbrains.intellij.platform.gradle.TestFrameworkType
+
 plugins {
-    id("java")
     id("org.jetbrains.kotlin.jvm") version "2.4.21"
     id("org.jetbrains.intellij.platform") version "2.19.0"
 }
 
-group = "fr.rakambda"
-version = "1.0.0"
+group = providers.gradleProperty("pluginGroup").get()
+version = providers.gradleProperty("pluginVersion").get()
+
+kotlin {
+    jvmToolchain(21)
+}
 
 repositories {
     mavenCentral()
@@ -17,9 +22,12 @@ repositories {
 // Configure IntelliJ Platform Gradle Plugin
 // Read more: https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin.html
 dependencies {
+    testImplementation("junit:junit:4.13.2")
+    testImplementation("org.opentest4j:opentest4j:1.3.0")
+
     intellijPlatform {
-        create("IC", "2025.2.1")
-        testFramework(org.jetbrains.intellij.platform.gradle.TestFrameworkType.Platform)
+        create(providers.gradleProperty("platformType"), providers.gradleProperty("platformVersion"))
+        testFramework(TestFrameworkType.Platform)
 
         // Add necessary plugin dependencies for compilation here, example:
         // bundledPlugin("com.intellij.java")
@@ -28,25 +36,20 @@ dependencies {
 
 intellijPlatform {
     pluginConfiguration {
+        version = providers.gradleProperty("pluginVersion")
+
         ideaVersion {
-            sinceBuild = "251"
+            sinceBuild = providers.gradleProperty("pluginSinceBuild")
         }
 
         changeNotes = """
             Initial version
         """.trimIndent()
     }
-}
 
-tasks {
-    withType<JavaCompile> {
-        sourceCompatibility = "21"
-        targetCompatibility = "21"
-    }
-}
-
-kotlin {
-    compilerOptions {
-        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21)
+    pluginVerification {
+        ides {
+            recommended()
+        }
     }
 }

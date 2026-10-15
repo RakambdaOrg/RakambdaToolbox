@@ -8,8 +8,13 @@
     ]]></description>
 
     <depends>com.intellij.modules.platform</depends>
-    <!-- Terminal title notifier -->
+    <!-- Terminal title notifier: settings, notifications and Classic terminals -->
     <depends optional="true" config-file="rakambdatoolbox-terminal.xml">org.jetbrains.plugins.terminal</depends>
+
+    <content>
+        <!-- Terminal title notifier: Reworked terminals (needs the intellij.terminal.frontend module) -->
+        <module name="fr.rakambda.rakambdatoolbox.terminal.reworked"/>
+    </content>
 
     <resource-bundle>messages.RakambdaToolboxBundle</resource-bundle>
 

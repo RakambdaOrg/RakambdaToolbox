@@ -15,7 +15,7 @@ remove on its own.
 
 | Item                         | Value / location                                                    |
 |------------------------------|---------------------------------------------------------------------|
-| Language                     | Kotlin (JVM 21 toolchain)                                           |
+| Language                     | Kotlin (JVM 25 toolchain, as required by the 2026.x platform)       |
 | Build                        | Gradle (wrapper in `gradle/wrapper`), Kotlin DSL                    |
 | IntelliJ Platform plugin     | `org.jetbrains.intellij.platform` 2.x, configured in `build.gradle.kts` |
 | Target IDE                   | `platformType` / `platformVersion` in `gradle.properties`           |
@@ -37,6 +37,8 @@ src/main/kotlin/                  Plugin code (package fr.rakambda.rakambdatoolb
 src/main/resources/META-INF/
     plugin.xml                    Plugin descriptor: extensions, actions, dependencies
     rakambdatoolbox-terminal.xml  Extensions loaded only when the bundled Terminal plugin is present
+src/main/resources/fr.rakambda.rakambdatoolbox.terminal.reworked.xml
+                                  Content module descriptor (Reworked terminal, see "Content modules" below)
     pluginIcon.svg                Plugin icon
 src/main/resources/messages/      RakambdaToolboxBundle.properties (user-visible strings)
 src/test/kotlin/                  Tests (IntelliJ Platform test framework, JUnit 4)
@@ -84,6 +86,21 @@ claiming the build passes. CI (`build.yml`) runs on every push and is the refere
   optional dependency in `plugin.xml` (`<depends optional="true" config-file="...">`) so the plugin still loads in IDEs
   that lack it.
 
+### Content modules
+
+Some APIs live in content modules of bundled plugins that have their own classloader (for example the Reworked
+terminal API in `intellij.terminal.frontend`). A `<depends>` on the plugin does not give access to them. Use a content
+module of this plugin instead:
+
+- declare it in the `<content>` element of `plugin.xml`;
+- put its descriptor, named `<module name>.xml`, at the root of `src/main/resources`, with a `package` attribute and
+  the `<dependencies>` it needs (`<plugin id=.../>`, `<module name=.../>`);
+- keep its classes in that package only: the platform loads them with a classloader restricted to it. They can use the
+  classes of the main plugin, not the other way around.
+
+Frontend modules (`intellij.*.frontend`) are loaded in the IDE itself and in the JetBrains Client, not on a remote
+development host.
+
 ### Tests
 
 - Tests use the IntelliJ Platform test framework (`BasePlatformTestCase`, `CodeInsightTestFixture`) on JUnit 4.
@@ -110,9 +127,8 @@ Do not bump versions manually unless the task requires it.
    `since-build` means users of older IDEs can hit missing APIs at runtime.
 3. Update `since-build` in `updatePlugins.xml` accordingly.
 
-From 2025.3, IntelliJ IDEA Community is no longer distributed as a separate product: targeting it requires switching
-to the unified IntelliJ IDEA distribution. Check the IntelliJ Platform Gradle Plugin documentation for the
-corresponding `platformType` before upgrading.
+The target is the unified IntelliJ IDEA distribution (`platformType=IU`): IntelliJ IDEA Community is no longer
+distributed separately since 2025.3.
 
 ## Release process
 

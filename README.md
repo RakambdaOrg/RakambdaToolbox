@@ -6,9 +6,9 @@ IntelliJ plugin for my personal needs.
 
 - **Terminal title notifier**: sends a notification (system notification when the IDE is in the background, IDE
   notification otherwise) as soon as the title of a terminal of the Terminal tool window contains one of the
-  configured strings. Configure them in *Settings | Tools | Terminal Title Notifier*. To match the title set by the
-  program running in the terminal, enable the advanced setting
-  `terminal.show.application.title` (*Settings | Advanced Settings*, Terminal section).
+  configured strings. Works with the Classic and Reworked terminal engines. Configure it in
+  *Settings | Tools | Terminal Title Notifier*. In remote development, install the plugin in the JetBrains Client and
+  configure it there: Reworked terminals and system notifications live on the client side.
 
 ## Installation and updates
 

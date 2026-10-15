@@ -2,8 +2,8 @@
 <plugins>
     <plugin
             id="fr.rakambda.rakambdatoolbox"
-            url="https://mycompany.example.com/my_repo/my_plugin.jar"
+            url="https://github.com/RakambdaOrg/RakambdaToolbox/releases/download/v1.0.0/RakambdaToolbox-1.0.0.zip"
             version="1.0.0">
-        <idea-version since-build="251.*"/>
+        <idea-version since-build="252"/>
     </plugin>
 </plugins>
